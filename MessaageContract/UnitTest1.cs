@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using FluentAssertions;
 using PactNet;
 using PactNet.Matchers;
 using PactNet.Output.Xunit;
@@ -9,14 +9,14 @@ namespace MessageContract.Tests;
 
 public class StockEventProcessorTests
 {
-  private readonly IMessagePactBuilderV3 _messagePact;
+  private readonly IMessagePactBuilderV4 _messagePact;
 
   public StockEventProcessorTests(ITestOutputHelper output)
   {
     IPactV4 v4 = Pact.V4("Stock Event Consumer", "Stock Event Producer", new PactConfig
     {
-      PactDir = "../../pacts/",
-      DefaultJsonSettings = new JsonSerializerSettings
+      PactDir = "../pacts/",
+      DefaultJsonSettings = new JsonSerializerOptions
       {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
       },
@@ -25,7 +25,7 @@ public class StockEventProcessorTests
         new XunitOutput(output)
       }
     });
-    this._messagePact = v4.WithMessageInteractions();
+    _messagePact = v4.WithMessageInteractions();
   }
 
   [Fact]
@@ -39,7 +39,7 @@ public class StockEventProcessorTests
       {
         Name = Match.Type("AAPL"),
         Price = Match.Decimal(1.23m),
-        Timestamp = Match.Type(14.February(2022).At(13, 14, 15, 678))
+        Timestamp = Match.Type(new DateTime(2022, 2, 14, 13, 14, 15, 678))
       }, 1))
       .Verify<ICollection<StockEvent>>(events =>
       {
@@ -49,9 +49,16 @@ public class StockEventProcessorTests
           {
             Name = "AAPl",
             Price = 1.23m,
-            Timestamp = 14.February(2022).At(13, 14, 15, 678)
+            Timestamp = new DateTime(2022,2, 14, 13, 14, 15, 678)
           }
         });
       });
   }
+}
+
+public class StockEvent
+{
+  public string Name { get; set; }
+  public decimal Price { get; set; }
+  public DateTime Timestamp { get; set; }
 }
