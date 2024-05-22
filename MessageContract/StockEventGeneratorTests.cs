@@ -5,7 +5,12 @@ namespace MessageContract.Tests;
 
 public class StockEventGeneratorTests : IDisposable
 {
-  private readonly PactVerifier _verifier = new("Stock Event Producer");
+  private readonly PactVerifier _verifier;
+
+  public StockEventGeneratorTests()
+  {
+    _verifier = new PactVerifier("Stock Event Producer");
+  }
 
   public void Dispose()
   {
@@ -29,17 +34,18 @@ public class StockEventGeneratorTests : IDisposable
     {
       PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
-
+    ;
     _verifier
       .WithMessages(scenarios =>
       {
-        // register the responses to each interaction
+        // register the response to each interaction
         // the descriptions must match those in the pact file(s)
         scenarios
           .Add("a single event", () => new StockEvent
           {
             Name = "AAPL",
             Price = 1.23m
+
           })
           .Add("some stock ticker events", builder =>
             {
@@ -47,7 +53,7 @@ public class StockEventGeneratorTests : IDisposable
                 .WithMetadata(new
                 {
                   ContentType = "application/json",
-                  Key = "value"
+                  Key = "valueKey"
                 })
               .WithContent(() => new[]
               {
