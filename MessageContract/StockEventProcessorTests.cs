@@ -15,7 +15,7 @@ public class StockEventProcessorTests
   {
     IPactV4 v4 = Pact.V4("Stock Event Consumer", "Stock Event Producer", new PactConfig
     {
-      PactDir = "../../../pacts/",
+      PactDir = "../../../../pacts/",
       DefaultJsonSettings = new JsonSerializerOptions
       {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -54,11 +54,4 @@ public class StockEventProcessorTests
         });
       });
   }
-}
-
-public class StockEvent
-{
-  public string Name { get; set; }
-  public decimal Price { get; set; }
-  public DateTime Timestamp { get; set; }
 }
