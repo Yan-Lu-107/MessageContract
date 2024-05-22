@@ -1,0 +1,80 @@
+{
+  "consumer": {
+    "name": "Stock Event Consumer"
+  },
+  "interactions": [
+    {
+      "contents": {
+        "content": [
+          {
+            "name": "AAPL",
+            "price": 1.23,
+            "timestamp": "2022-02-14T13:14:15.678"
+          }
+        ],
+        "contentType": "application/json",
+        "encoded": false
+      },
+      "description": "some stock ticker events",
+      "matchingRules": {
+        "body": {
+          "$": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type",
+                "min": 1
+              }
+            ]
+          },
+          "$[*].name": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$[*].price": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "decimal"
+              }
+            ]
+          },
+          "$[*].timestamp": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "key": "valueKey"
+      },
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "A list of events is pushed to the queue"
+        }
+      ],
+      "type": "Asynchronous/Messages"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.4.16",
+      "models": "1.1.19"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "Stock Event Producer"
+  }
+}

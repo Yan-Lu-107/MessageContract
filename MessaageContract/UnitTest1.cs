@@ -15,7 +15,7 @@ public class StockEventProcessorTests
   {
     IPactV4 v4 = Pact.V4("Stock Event Consumer", "Stock Event Producer", new PactConfig
     {
-      PactDir = "../pacts/",
+      PactDir = "../../../pacts/",
       DefaultJsonSettings = new JsonSerializerOptions
       {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -47,7 +47,7 @@ public class StockEventProcessorTests
         {
           new StockEvent
           {
-            Name = "AAPl",
+            Name = "AAPL",
             Price = 1.23m,
             Timestamp = new DateTime(2022,2, 14, 13, 14, 15, 678)
           }
