@@ -45,7 +45,6 @@ public class StockEventGeneratorTests : IDisposable
           {
             Name = "AAPL",
             Price = 1.23m
-
           })
           .Add("some stock ticker events", builder =>
             {
