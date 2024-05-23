@@ -39,6 +39,7 @@ public class StockEventProcessorTests
           .WithMetadata("key", "valueKey")
             .WithJsonContent(Match.MinType(new
             {
+                //Expectations on each property of one message type
                 StartArg = Match.Type("sss"),
                 Description = Match.Type("dff"),
                 Priority = Match.Type(ProcessPriority.Highest),
@@ -57,6 +58,10 @@ public class StockEventProcessorTests
           {
               events.Should().BeEquivalentTo(new[]
           {
+                // List of expected events, read from MessageFromGain.json (deserialized to WorkflowCreated type)
+                // Each _messagePact only validates one type of message
+                // MessageFromGain.json will be updated by the consumer manually when the expectations change
+                // or when the provider provides a new version
               new WorkflowCreated
             {
                 StartArg = "sss",
@@ -65,5 +70,6 @@ public class StockEventProcessorTests
             }
             });
           });
+        //MessageFromGain.json with real actual value will be feed to Consumer in another tests to check if it can handle it correctly 
     }
 }
