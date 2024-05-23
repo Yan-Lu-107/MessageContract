@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageContract.Tests", "MessageContract\MessageContract.Tests.csproj", "{61995F21-6C58-45B2-AD6D-980492329815}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pacts", "Pacts", "{4AAB880C-9864-40B6-A0DB-64D23B9AA204}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CA15FF06-9F03-465B-972B-8DAE2444983E}"
 	ProjectSection(SolutionItems) = preProject
-		pacts\Stock Event Consumer-Stock Event Producer.json = pacts\Stock Event Consumer-Stock Event Producer.json
+		..\Git\SimCorp.DataManagement.Mockingbird\NuGet.config = ..\Git\SimCorp.DataManagement.Mockingbird\NuGet.config
 	EndProjectSection
 EndProject
 Global

@@ -2,6 +2,8 @@ using FluentAssertions;
 using PactNet;
 using PactNet.Matchers;
 using PactNet.Output.Xunit;
+using SimCorp.Gain.Messages.Shared.Workflow;
+using SimCorp.Gain.Messages.System.Workflow;
 using System.Text.Json;
 using Xunit.Abstractions;
 
@@ -9,49 +11,59 @@ namespace MessageContract.Tests;
 
 public class StockEventProcessorTests
 {
-  private readonly IMessagePactBuilderV4 _messagePact;
+    private readonly IMessagePactBuilderV4 _messagePact;
 
-  public StockEventProcessorTests(ITestOutputHelper output)
-  {
-    IPactV4 v4 = Pact.V4("Stock Event Consumer", "Stock Event Producer", new PactConfig
+    public StockEventProcessorTests(ITestOutputHelper output)
     {
-      PactDir = "../../../../pacts/",
-      DefaultJsonSettings = new JsonSerializerOptions
-      {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-      },
-      Outputters = new[]
-      {
+        IPactV4 v4 = Pact.V4("Stock Event Consumer", "Stock Event Producer", new PactConfig
+        {
+            PactDir = "../../../../pacts/",
+            DefaultJsonSettings = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            },
+            Outputters = new[]
+          {
         new XunitOutput(output)
       }
-    });
-    _messagePact = v4.WithMessageInteractions();
-  }
-
-  [Fact]
-  public void ReceiveSomeStockEvents()
-  {
-    this._messagePact
-      .ExpectsToReceive("some stock ticker events")
-      .Given("A list of events is pushed to the queue")
-      .WithMetadata("key", "valueKey")
-      .WithJsonContent(Match.MinType(new
-      {
-        Name = Match.Type("AAPL"),
-        Price = Match.Decimal(1.23m),
-        Timestamp = Match.Type(new DateTime(2022, 2, 14, 13, 14, 15, 678))
-      }, 1))
-      .Verify<ICollection<StockEvent>>(events =>
-      {
-        events.Should().BeEquivalentTo(new[]
-        {
-          new StockEvent
-          {
-            Name = "AAPL",
-            Price = 1.23m,
-            Timestamp = new DateTime(2022,2, 14, 13, 14, 15, 678)
-          }
         });
-      });
-  }
+        _messagePact = v4.WithMessageInteractions();
+    }
+
+    [Fact]
+    public void ReceiveSomeStockEvents()
+    {
+        this._messagePact
+          .ExpectsToReceive("some stock ticker events")
+          .Given("A list of events is pushed to the queue")
+          .WithMetadata("key", "valueKey")
+            .WithJsonContent(Match.MinType(new
+            {
+                StartArg = Match.Type("sss"),
+                Description = Match.Type("dff"),
+                Priority = Match.Type(ProcessPriority.Highest),
+                Ancestry = Match.Null(),
+                StartsBulkOperation = Match.Type(false),
+                Args = Match.Null(),
+                ContextData = Match.Null(),
+                WorkflowId = Match.Integer(0),
+                WorkflowType = Match.Type(WorkflowType.Business),
+                CorrelationId = Match.Null(),
+                BulkCorrelationId = Match.Null(),
+                Alarms = Match.Null(),
+                WorkflowCorrelation = Match.Null()
+            }, 1))
+          .Verify<ICollection<WorkflowCreated>>(events =>
+          {
+              events.Should().BeEquivalentTo(new[]
+          {
+              new WorkflowCreated
+            {
+                StartArg = "sss",
+                Description = "dff",
+                Priority = ProcessPriority.Highest
+            }
+            });
+          });
+    }
 }

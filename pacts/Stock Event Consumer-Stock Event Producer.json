@@ -7,9 +7,19 @@
       "contents": {
         "content": [
           {
-            "name": "AAPL",
-            "price": 1.23,
-            "timestamp": "2022-02-14T13:14:15.678"
+            "alarms": null,
+            "ancestry": null,
+            "args": null,
+            "bulkCorrelationId": null,
+            "contextData": null,
+            "correlationId": null,
+            "description": "dff",
+            "priority": 5,
+            "startArg": "sss",
+            "startsBulkOperation": false,
+            "workflowCorrelation": null,
+            "workflowId": 0,
+            "workflowType": 0
           }
         ],
         "contentType": "application/json",
@@ -27,7 +37,55 @@
               }
             ]
           },
-          "$[*].name": {
+          "$[*].alarms": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].ancestry": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].args": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].bulkCorrelationId": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].contextData": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].correlationId": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].description": {
             "combine": "AND",
             "matchers": [
               {
@@ -35,15 +93,47 @@
               }
             ]
           },
-          "$[*].price": {
+          "$[*].priority": {
             "combine": "AND",
             "matchers": [
               {
-                "match": "decimal"
+                "match": "type"
               }
             ]
           },
-          "$[*].timestamp": {
+          "$[*].startArg": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$[*].startsBulkOperation": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$[*].workflowCorrelation": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "null"
+              }
+            ]
+          },
+          "$[*].workflowId": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "integer"
+              }
+            ]
+          },
+          "$[*].workflowType": {
             "combine": "AND",
             "matchers": [
               {
