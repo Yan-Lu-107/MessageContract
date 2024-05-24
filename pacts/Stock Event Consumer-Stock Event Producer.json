@@ -17,7 +17,6 @@
             "priority": 5,
             "startArg": "sss",
             "startsBulkOperation": false,
-            "workflowCorrelation": null,
             "workflowId": 0,
             "workflowType": 0
           }
@@ -114,14 +113,6 @@
             "matchers": [
               {
                 "match": "type"
-              }
-            ]
-          },
-          "$[*].workflowCorrelation": {
-            "combine": "AND",
-            "matchers": [
-              {
-                "match": "null"
               }
             ]
           },

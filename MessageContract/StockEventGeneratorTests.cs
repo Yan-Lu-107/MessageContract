@@ -57,9 +57,9 @@ public class StockEventGeneratorTests : IDisposable
                 })
               .WithContent(() => new[]
               {
-             // List of actual published messages in MessageFromGain.json (Deserialize to WorkflowCreated type)
-            // Each type of message will be validated in a separate _verifier
-            // Before this, we need to integrate this verification with functional tests that generate the actual published messages
+            // List of actual published messages in MessageFromGain.json (Deserialize to WorkflowCreated type)
+            // Before this, we need to integrate this verification with functional tests which generate the actual published messages
+            // and store in MessageFromGain.json 
               new WorkflowCreated { StartArg = "sss", Description = "dff", Priority = ProcessPriority.Highest },
               new WorkflowCreated { StartArg = "sss", Description = "dff", Priority = ProcessPriority.Highest }
                 });

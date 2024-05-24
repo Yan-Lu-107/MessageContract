@@ -1,3 +1,334 @@
-{
-
-}
+[
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.EDM.IntegrationService.Server.Processes.StartArguments.GenericFeedRequestStartArgument",
+      "Description": "Processing MessageContainer received from connector Gain API: Excel-Party",
+      "Priority": "Normal",
+      "Ancestry": [],
+      "StartsBulkOperation": true,
+      "Args": {
+        "TriggeredBy": ""
+      },
+      "ContextData": {},
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId1}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId1}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.StaticData.DataManagement.BusinessProcess.BatchOpeningBusinessProcessStartArgument",
+      "Description": "Processing feed Excel",
+      "Priority": "Normal",
+      "Ancestry": [
+        {
+          "Type": "Communication",
+          "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
+        }
+      ],
+      "StartsBulkOperation": true,
+      "Args": {
+        "TriggeredBy": "Excel.Party"
+      },
+      "ContextData": {},
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId2}",
+      "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.StaticData.DataManagement.BusinessProcess.FreshAggregateRequestBusinessProcessStartArgument",
+      "Description": "Party from feed Excel-Party [IdBBCompany:{placeholderForString_idBBCompany}]",
+      "BulkCorrelationId": "{placeholderForString_operationIdFromCloudEvent}",
+      "Priority": "Normal",
+      "Ancestry": [
+        {
+          "Type": "Communication",
+          "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
+        },
+        {
+          "Id": "{placeholderForInt_randomWorkFlowTaskId2}"
+        }
+      ],
+      "BreaksBulkSuccession": true,
+      "Args": {
+        "TriggeredBy": "Excel.Party",
+        "BusinessTypeModel": "SimCorpDimension",
+        "BusinessTypeName": "Party",
+        "ProcessMode": "Automatic",
+        "SearchCriteria": {
+          "idBBCompany": "{placeholderForString_idBBCompany}",
+          "SourceIdentifier": "{placeholderForString_sourceIdentifier}"
+        }
+      },
+      "ContextData": {},
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId1}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "Workflow",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId2}",
+      "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "DataAcquisition",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId1}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "Workflow",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId1}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.StaticData.DataManagement.ScrubbingProcess.FreshAggregateScrubbingProcessStartArgument",
+      "Description": "Aggregate Scrubbing",
+      "BulkCorrelationId": "{placeholderForString_operationIdFromCloudEvent}",
+      "Priority": "Normal",
+      "Ancestry": [
+        {
+          "Type": "Communication",
+          "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
+        },
+        {
+          "Id": "{placeholderForInt_randomWorkFlowTaskId2}"
+        },
+        {
+          "Id": "{placeholderForInt_sharedWorkflowTaskId1}"
+        }
+      ],
+      "Args": {
+        "TriggeredBy": "Excel.Party",
+        "BusinessTypeModel": "SimCorpDimension",
+        "BusinessTypeName": "Party",
+        "GoldenCopyIdentityId": "{placeholderForInt_goldenCopyIdentityId}",
+        "StartMode": "Sequential",
+        "SilverCopyIdentityIds": [
+          "{placeholderForInt_silverCopyIdentityId}"
+        ],
+        "SilverCopyIdentityIdsToIgnore": []
+      },
+      "ContextData": {},
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId2}",
+      "WorkflowType": "Scrubbing",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId2}",
+      "WorkflowType": "Scrubbing",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_changed_business_object.v3",
+    "data": {
+      "BusinessObjectReference": {
+        "Model": "SimCorpDimension",
+        "DataType": "Party",
+        "Domain": "Golden",
+        "Id": "{placeholderForInt_goldenCopyIdentityId}",
+        "Version": 1
+      },
+      "Title": "GP_5{placeholderForString_goldenCopyIdentityId}",
+      "Discriminator": "Master",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId2}",
+      "WorkflowType": "Scrubbing",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_changed_business_object.v3",
+    "data": {
+      "BusinessObjectReference": {
+        "Model": "SimCorpDimension",
+        "DataType": "Party",
+        "Domain": "Silver",
+        "Id": "{placeholderForInt_silverCopyIdentityId}",
+        "Version": 1
+      },
+      "Title": "{placeholderForString_idBBCompany}",
+      "Discriminator": "Master",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId1}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.Platform.Shared.Model.FreshPublicationProcessStartArgument",
+      "Description": "Aggregate publishing",
+      "BulkCorrelationId": "{placeholderForString_operationIdFromCloudEvent}",
+      "Priority": "Normal",
+      "Ancestry": [
+        {
+          "Type": "Communication",
+          "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
+        },
+        {
+          "Id": "{placeholderForInt_randomWorkFlowTaskId2}"
+        },
+        {
+          "Id": "{placeholderForInt_sharedWorkflowTaskId1}"
+        }
+      ],
+      "Args": {
+        "TriggeredBy": "Excel.Party",
+        "BusinessTypeModel": "SimCorpDimension",
+        "BusinessTypeName": "Party",
+        "GoldenCopyIdentityId": "{placeholderForInt_goldenCopyIdentityId}",
+        "AggregateVersion": null,
+        "EntityName": "Party"
+      },
+      "ContextData": {},
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "Workflow",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId1}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "SendMessageCompleted",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_ready.v2",
+    "data": {
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "SendMessageCompleted",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_ready.v2",
+    "data": {
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "SendMessageCompleted",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_ready.v2",
+    "data": {
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId3}",
+      "WorkflowType": "Communication",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.CorporateActions.Shared.BusinessProcess.SynchronizationBusinessProcessStartArgument",
+      "Description": "Corporate Actions Aggregate Synchronization - SimCorpDimension:Party with Identity ID '{placeholderForString_goldenCopyIdentityId}'",
+      "BulkCorrelationId": "{placeholderForString_operationIdFromCloudEvent}",
+      "Ancestry": [
+        {
+          "Type": "Communication",
+          "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
+        },
+        {
+          "Id": "{placeholderForInt_randomWorkFlowTaskId2}"
+        },
+        {
+          "Id": "{placeholderForInt_sharedWorkflowTaskId1}"
+        }
+      ],
+      "Args": {
+        "TriggeredBy": ""
+      },
+      "ContextData": {},
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId4}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": "{placeholderForInt_sharedWorkflowTaskId1}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId4}",
+      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": "{placeholderForInt_randomWorkFlowTaskId2}",
+      "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
+    }
+  }
+]
