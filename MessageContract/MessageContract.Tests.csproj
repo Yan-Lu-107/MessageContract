@@ -31,7 +31,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="pacts\" />
+    <None Update="ExpectedMessages.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MessageTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ActualMessages.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

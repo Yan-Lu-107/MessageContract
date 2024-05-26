@@ -23,7 +23,7 @@
         "contentType": "application/json",
         "encoded": false
       },
-      "description": "WorkflowCreated Message from Gain for the feed upload request",
+      "description": "SimCorp.Gain.Messages.System.Workflow.WorkflowCreated Message from Gain for the feed upload request",
       "matchingRules": {
         "body": {
           "$": {
@@ -31,7 +31,7 @@
             "matchers": [
               {
                 "match": "type",
-                "min": 3
+                "min": 2
               }
             ]
           },

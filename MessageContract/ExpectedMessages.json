@@ -1,0 +1,12 @@
+[
+  {
+    "type": "com.simcorp.gain.system.workflow_created.v3",
+    "data": {
+      "StartArg": "Aim.Gain.StaticData.DataManagement.BusinessProcess.FreshAggregateRequestBusinessProcessStartArgument",
+      "Description": "Party from feed Excel-Party [IdBBCompany:abc]",
+      "BulkCorrelationId": "abc",
+      "WorkflowId": 123,
+      "CorrelationId": "123"
+    }
+  }
+]
