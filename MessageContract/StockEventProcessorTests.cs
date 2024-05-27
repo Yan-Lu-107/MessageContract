@@ -42,13 +42,11 @@ public class StockEventProcessorTests
         foreach (string messageType in messageTypes)
         {
             Type eventType = EventTypeMapper.GetTypeForEventName(messageType);
+            int actualMessageCount = actualGroupByMessagesWithType.TryGetValue(messageType, out List<object>? actualGroupedMsgs)
+                ? actualGroupedMsgs.Count
+                : 1;
 
-            if (!actualGroupByMessagesWithType.TryGetValue(messageType, out List<object> actualGroupedMsgs))
-            {
-                throw new Exception($"No matching expected message group found");
-            }
-
-            if (!expectedGroupByMessagesWithType.TryGetValue(messageType, out List<object> expectedGroupedMsgs))
+            if (!expectedGroupByMessagesWithType.TryGetValue(messageType, out List<object>? expectedGroupedMsgs))
             {
                 throw new Exception($"No matching expected message group found");
             }
@@ -59,7 +57,7 @@ public class StockEventProcessorTests
                  .ExpectsToReceive($"{eventType.Name} Message from Gain for the feed upload request")
                  .Given($"{eventType.Name} events are pushed to the queue")
                  .WithMetadata("key", "valueKey")
-                 .WithJsonContent(Match.MinType(MessageExpectationProvider.GetContent(eventType), actualGroupedMsgs.Count))
+                 .WithJsonContent(Match.MinType(MessageExpectationProvider.GetContent(eventType), actualMessageCount))
                  .Verify<ICollection<WorkflowCreated>>(events =>
                  {
                      events.Should().BeEquivalentTo(new[] { expectedGroupedMsgs[0] });
@@ -72,10 +70,22 @@ public class StockEventProcessorTests
                  .ExpectsToReceive($"{eventType.Name} Message from Gain for the feed upload request")
                  .Given($"{eventType.Name} events are pushed to the queue")
                  .WithMetadata("key", "valueKey")
-                 .WithJsonContent(Match.MinType(MessageExpectationProvider.GetContent(eventType), actualGroupedMsgs.Count))
+                 .WithJsonContent(Match.MinType(MessageExpectationProvider.GetContent(eventType), actualMessageCount))
                  .Verify<ICollection<WorkflowFinished>>(events =>
                  {
-                     events.Should().BeEquivalentTo(new[] { actualGroupedMsgs[0] });
+                     events.Should().BeEquivalentTo(new[] { expectedGroupedMsgs[0] });
+                 });
+            }
+            else if (eventType.Name == "WorkflowChangedBusinessObject")
+            {
+                this._messagePact
+                 .ExpectsToReceive($"{eventType.Name} Message from Gain for the feed upload request")
+                 .Given($"{eventType.Name} events are pushed to the queue")
+                 .WithMetadata("key", "valueKey")
+                 .WithJsonContent(Match.MinType(MessageExpectationProvider.GetContent(eventType), actualMessageCount))
+                 .Verify<ICollection<WorkflowChangedBusinessObject>>(events =>
+                 {
+                     events.Should().BeEquivalentTo(new[] { expectedGroupedMsgs[0] });
                  });
             }
         }
@@ -86,6 +96,6 @@ public class StockEventProcessorTests
 //Issue/Todo:
 //How to use Match to validate that the actual value is one of the given expected values.
 //Need to manually create the expected message in the consumer test (only for required fields):
-//Define expected values for some properties.
-//Skip non-required fields.
+//  Define expected values for some properties.
+//  Skip non-required fields.
 //Not easy to debug why the provider test fails.

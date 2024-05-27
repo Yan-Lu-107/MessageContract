@@ -1,3 +1,4 @@
+using SimCorp.Gain.Messages.Data;
 using SimCorp.Gain.Messages.System.Batch;
 using SimCorp.Gain.Messages.System.Operations;
 using SimCorp.Gain.Messages.System.Task;
@@ -25,6 +26,8 @@ public static class EventTypeMapper
         "com.simcorp.gain.system.workflow_finished.v2" => typeof(WorkflowFinished),
         "com.simcorp.gain.system.workflow_ready.v2" => typeof(WorkflowReady),
         "com.simcorp.gain.system.workflow_waiting.v2" => typeof(WorkflowWaiting),
+
+        "com.simcorp.gain.data.business_object_changed.v5" => typeof(BusinessObjectChanged),
 
         // Default case
         _ => throw new ArgumentException($"{messageName} is not a recognised type name. Please consider adding this to {nameof(EventTypeMapper)}.")

@@ -45,5 +45,30 @@
       "WorkflowType": "Business",
       "CorrelationId": "abc"
     }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_changed_business_object.v3",
+    "data": {
+      "BusinessObjectReference": {
+        "Model": "SimCorpDimension",
+        "DataType": "Party",
+        "Domain": "Golden",
+        "Id": 123,
+        "Version": 1
+      },
+      "Title": "GP_5232",
+      "Discriminator": "Master",
+      "WorkflowId": 123,
+      "WorkflowType": "Business",
+      "CorrelationId": "aa"
+    }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_waiting.v2",
+    "data": {
+      "WaitingFor": "Workflow",
+      "WorkflowId": 123,
+      "CorrelationId": "aa"
+    }
   }
 ]

@@ -7,6 +7,94 @@
       "contents": {
         "content": [
           {
+            "businessObjectReference": {
+              "dataType": "Party",
+              "discriminator": null,
+              "domain": "Golden",
+              "id": 123,
+              "model": "SimCorpDimension",
+              "version": 1
+            },
+            "correlationId": "aa",
+            "discriminator": "Master",
+            "title": "GP_5232",
+            "workflowId": 123,
+            "workflowType": 0
+          }
+        ],
+        "contentType": "application/json",
+        "encoded": false
+      },
+      "description": "WorkflowChangedBusinessObject Message from Gain for the feed upload request",
+      "matchingRules": {
+        "body": {
+          "$": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type",
+                "min": 1
+              }
+            ]
+          },
+          "$[*].businessObjectReference": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$[*].correlationId": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$[*].title": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "include",
+                "value": "GP_5232"
+              }
+            ]
+          },
+          "$[*].workflowId": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "number"
+              }
+            ]
+          },
+          "$[*].workflowType": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "key": "valueKey"
+      },
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "WorkflowChangedBusinessObject events are pushed to the queue"
+        }
+      ],
+      "type": "Asynchronous/Messages"
+    },
+    {
+      "contents": {
+        "content": [
+          {
             "ancestry": [],
             "contextData": {},
             "correlationId": "sba",

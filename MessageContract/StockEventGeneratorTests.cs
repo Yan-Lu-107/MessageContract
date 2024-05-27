@@ -45,7 +45,7 @@ public class StockEventGeneratorTests : IDisposable
             {
                 Type eventType = EventTypeMapper.GetTypeForEventName(messageType);
 
-                if (!actualGroupByMessagesWithType.TryGetValue(messageType, out List<object> actualGroupedMsgs))
+                if (!actualGroupByMessagesWithType.TryGetValue(messageType, out List<object>? actualGroupedMsgs))
                 {
                     throw new Exception($"No matching expected message group found");
                 }
