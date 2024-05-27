@@ -5,12 +5,15 @@
       "StartArg": "Aim.Gain.EDM.IntegrationService.Server.Processes.StartArguments.GenericFeedRequestStartArgument",
       "Description": "Processing MessageContainer received from connector Gain API: Excel-Party",
       "Priority": "Normal",
-      //"Ancestry": [],
+      "Ancestry": [],
       "StartsBulkOperation": true,
+      "Args": {
+        "TriggeredBy": ""
+      },
       "ContextData": {},
-      "WorkflowId": 11,
+      "WorkflowId": 123,
       "WorkflowType": "Communication",
-      "CorrelationId": "sba"
+      "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
     }
   },
   {
@@ -19,51 +22,19 @@
       "StartArg": "Aim.Gain.StaticData.DataManagement.BusinessProcess.BatchOpeningBusinessProcessStartArgument",
       "Description": "Processing feed Excel",
       "Priority": "Normal",
-      //"Ancestry": [
-      //  {
-      //    "Type": "Communication",
-      //    "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
-      //  }
-      //],
+      "Ancestry": [
+        {
+          "Type": "Communication",
+          "Id": 123
+        }
+      ],
       "StartsBulkOperation": true,
-      //"Args": {
-      //  "TriggeredBy": "Excel.Party"
-      //},
+      "Args": {
+        "TriggeredBy": "Excel.Party"
+      },
       "ContextData": {},
-      "WorkflowId": 123,
+      "WorkflowId": 333,
       "CorrelationId": "{placeholderForString_operationIdFromCloudEvent}"
-    }
-  },
-  {
-    "type": "com.simcorp.gain.system.workflow_created.v3",
-    "data": {
-      "StartArg": "Aim.Gain.StaticData.DataManagement.BusinessProcess.FreshAggregateRequestBusinessProcessStartArgument",
-      "Description": "Party from feed Excel-Party [IdBBCompany:{EE}]",
-      //"BulkCorrelationId": "{SF}",
-      "Priority": "Normal",
-      //"Ancestry": [
-      //  {
-      //    "Type": "Communication",
-      //    "Id": "{placeholderForInt_randomWorkFlowTaskId1}"
-      //  },
-      //  {
-      //    "Id": "{placeholderForInt_randomWorkFlowTaskId2}"
-      //  }
-      //],
-      "BreaksBulkSuccession": true,
-      //"Args": {
-      //  "TriggeredBy": "Excel.Party",
-      //  "BusinessTypeModel": "SimCorpDimension",
-      //  "BusinessTypeName": "Party",
-      //  "ProcessMode": "Automatic",
-      //  "SearchCriteria": {
-      //    "idBBCompany": "{placeholderForString_idBBCompany}",
-      //    "SourceIdentifier": "{placeholderForString_sourceIdentifier}"
-      //  }
-      //},
-      "ContextData": {},
-      "WorkflowId": 12,
-      "CorrelationId": "{placeholderForString_feedUploadStartArgumentCorrelationId}"
     }
   }
 ]

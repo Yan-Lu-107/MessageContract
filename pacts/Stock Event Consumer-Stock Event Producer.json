@@ -7,17 +7,15 @@
       "contents": {
         "content": [
           {
-            "breaksBulkSuccession": false,
-            "bulkCorrelationId": null,
+            "ancestry": [],
             "contextData": {},
             "correlationId": "sba",
-            "description": "Processing MessageContainer received from connector Gain API: Excel-Party",
+            "description": "Party from feed Excel-Party [IdBBCompany:abc]",
             "priority": 2,
-            "startArg": "Aim.Gain.EDM.IntegrationService.Server.Processes.StartArguments.GenericFeedRequestStartArgument",
-            "startsBulkOperation": true,
-            "workflowCorrelation": null,
+            "startArg": "Aim.Gain.StaticData.DataManagement.BusinessProcess.FreshAggregateRequestBusinessProcessStartArgument",
+            "startsBulkOperation": false,
             "workflowId": 11,
-            "workflowType": 2
+            "workflowType": 0
           }
         ],
         "contentType": "application/json",
@@ -31,23 +29,15 @@
             "matchers": [
               {
                 "match": "type",
-                "min": 3
+                "min": 1
               }
             ]
           },
-          "$[*].breaksBulkSuccession": {
+          "$[*].ancestry": {
             "combine": "AND",
             "matchers": [
               {
                 "match": "type"
-              }
-            ]
-          },
-          "$[*].bulkCorrelationId": {
-            "combine": "AND",
-            "matchers": [
-              {
-                "match": "null"
               }
             ]
           },
@@ -96,14 +86,6 @@
             "matchers": [
               {
                 "match": "type"
-              }
-            ]
-          },
-          "$[*].workflowCorrelation": {
-            "combine": "AND",
-            "matchers": [
-              {
-                "match": "null"
               }
             ]
           },

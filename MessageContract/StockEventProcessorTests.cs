@@ -61,6 +61,8 @@ public class StockEventProcessorTests
 
 //Issue:
 //    1. How to use match to validate actual value is one of the given expected
-//    2. Need to manually create expected message in the consumer test
+//    2. Need to manually create expected message in the consumer test (only for required field)
+//       - Define expected Value for some propreties
+//       - Skip not required field
 //    3. Not easy to debug why the provider test fails
 

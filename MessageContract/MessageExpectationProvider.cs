@@ -9,20 +9,20 @@ namespace MessageContract.Tests
         private readonly static object workflowCreatedContent = new
         {
             //Expectations on each property of each message type
-            StartArg = Match.Type("Aim.Gain.EDM.IntegrationService.Server.Processes.StartArguments.GenericFeedRequestStartArgument"),
-            Description = Match.Type("Processing MessageContainer received from connector Gain API: Excel-Party"),
+            StartArg = Match.Type("Aim.Gain.StaticData.DataManagement.BusinessProcess.FreshAggregateRequestBusinessProcessStartArgument"),
+            Description = Match.Type("Party from feed Excel-Party [IdBBCompany:abc]"),
             Priority = Match.Type(ProcessPriority.Normal),
-            //Ancestry = Match.Type(Array.Empty<object>()),
-            StartsBulkOperation = Match.Type(true),
-            //Args = Match.Type(new Dictionary<string, object> { { "TriggeredBy", Match.Type(new JsonObject()) } }),
+            //Alarms = Match.Type(new Alarms()),
+            Ancestry = Match.Type(Array.Empty<Ancestor>()),
+            StartsBulkOperation = Match.Type(false),
+            //BreaksBulkSuccession = Match.Type(false),
+            //Args = Match.Type(new Dictionary<string, object>()),
             ContextData = Match.Type(new Dictionary<string, object>()),
+            WorkflowType = Match.Type(WorkflowType.Business),
             WorkflowId = Match.Number(11),
-            WorkflowType = Match.Type(WorkflowType.Communication),
             CorrelationId = Match.Type("sba"),
-            BulkCorrelationId = Match.Null(),
-            //Alarms = Match.Null(),
-            BreaksBulkSuccession = Match.Type(false),
-            WorkflowCorrelation = Match.Null()
+            //BulkCorrelationId = Match.Type("sba"),
+            //WorkflowCorrelation = Match.Type("sba"),
         };
 
         private readonly static object workflowFinishedContent = new
