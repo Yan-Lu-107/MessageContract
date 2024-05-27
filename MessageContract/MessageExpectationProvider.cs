@@ -6,9 +6,9 @@ namespace MessageContract.Tests
 {
     internal static class MessageExpectationProvider
     {
+        //Expectations on each property of each message type
         private readonly static object workflowCreatedContent = new
         {
-            //Expectations on each property of each message type
             StartArg = Match.Type("Aim.Gain.StaticData.DataManagement.BusinessProcess.FreshAggregateRequestBusinessProcessStartArgument"),
             Description = Match.Type("Party from feed Excel-Party [IdBBCompany:abc]"),
             Priority = Match.Type(ProcessPriority.Normal),
@@ -29,7 +29,7 @@ namespace MessageContract.Tests
         {
             State = Match.Type(WorkflowFinishedState.Finished),
             WorkflowId = Match.Number(123),
-            WorkflowType = Match.Type(WorkflowType.Communication),
+            WorkflowType = Match.Type(WorkflowType.Business),
             CorrelationId = Match.Type("abc")
         };
 

@@ -17,6 +17,15 @@
       "WorkflowType": "Business"
       //"alarms": { }
     }
+  },
+  {
+    "type": "com.simcorp.gain.system.workflow_finished.v2",
+    "data": {
+      "State": "Finished",
+      "WorkflowId": 123,
+      "WorkflowType": "Business",
+      "CorrelationId": "abc"
+    }
   }
 ]
 

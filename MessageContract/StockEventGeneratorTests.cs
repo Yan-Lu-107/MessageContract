@@ -36,31 +36,35 @@ public class StockEventGeneratorTests : IDisposable
         };
         Dictionary<string, List<object>> actualGroupByMessagesWithType = Steps.PrepareData("MessageTest.json");
         ICollection<string> messageTypes = actualGroupByMessagesWithType.Keys;
-        foreach (string messageType in messageTypes)
-        {
-            Type eventType = EventTypeMapper.GetTypeForEventName(messageType);
 
-            if (!actualGroupByMessagesWithType.TryGetValue(messageType, out List<object> actualGroupedMsgs))
+
+        _verifier
+        .WithMessages(scenarios =>
+        {
+            foreach (string messageType in messageTypes)
             {
-                throw new Exception($"No matching expected message group found");
-            }
-            _verifier
-            .WithMessages(scenarios =>
-            {
-                scenarios
-                .Add($"{eventType.Name} Message from Gain for the feed upload request", builder =>
+                Type eventType = EventTypeMapper.GetTypeForEventName(messageType);
+
+                if (!actualGroupByMessagesWithType.TryGetValue(messageType, out List<object> actualGroupedMsgs))
                 {
-                    builder
-                    .WithMetadata(new
+                    throw new Exception($"No matching expected message group found");
+                }
+                scenarios
+                    .Add($"{eventType.Name} Message from Gain for the feed upload request", builder =>
                     {
-                        ContentType = "application/json",
-                        Key = "valueKey"
-                    })
-                .WithContent(() => actualGroupedMsgs);
-                });
-            }, defaultSettings)
-            .WithFileSource(new FileInfo(pactPath))
-            .Verify();
-        }
+                        builder
+                        .WithMetadata(new
+                        {
+                            ContentType = "application/json",
+                            Key = "valueKey"
+                        })
+                    .WithContent(() => actualGroupedMsgs);
+
+                    });
+            }
+
+        }, defaultSettings)
+        .WithFileSource(new FileInfo(pactPath))
+        .Verify();
     }
 }

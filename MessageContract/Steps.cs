@@ -9,6 +9,7 @@ namespace MessageContract.Tests
         {
             List<JObject> actualMessages = ReadMessageList(filePath);
             return GroupByMessageWithType(actualMessages);
+
         }
 
         private static List<JObject> ReadMessageList(string filePath)
